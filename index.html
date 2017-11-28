@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+  <script src="https://code.angularjs.org/1.5.5/angular.min.js"></script>
+  <script src="script.js"></script>
+  <style type="text/css">
+    .loader {
+      border: 16px solid rgb(173, 173, 173);
+      border-radius: 50%;
+      border-top: 16px solid #428bca;
+      width: 36px;
+      height: 36px;
+      -webkit-animation: spin 2s linear infinite;
+      animation: spin 2s linear infinite;
+    }
+  </style>
+</head>
+<body  ng-app= "myApp" ng-controller="PatientCtrl">
+  <div class="container">
+  <div class="well">
+    <div ng-show="loading" class="loader row pull-right"></div> 
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+          <h2> {{ Patient.name[0].text }} </h2>
+          <p> 
+            Gender: {{ Patient.gender }} <br> 
+            DOB: {{ Patient.birthDate }}
+          </p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-xs-12">
+        <label>Search Condition</label>
+        <input class="form-control" type="text" placeholder="Search Condition" ng-model="searchText"/>  
+      </div>
+    </div>
+    <br>
+    <div class="row">
+    <div class="col-md-6 col-xs-12">
+    <table border='1' class="table table-bordered table-hover table-striped table-fit table-responsive">
+    <tr>
+      <th>
+        <a href="#" ng-click="sortData('date')">
+          Date Recorded
+          <span ng-class="getSortClass('date')"></span>
+        </a>
+      </th>
+      <th>
+        <a href="#" ng-click="sortData('condition')">
+          Condition
+          <span ng-class="getSortClass('condition')"></span>
+        </a>
+      </th>
+    </tr>
+    <tr ng-repeat="c in conditions | filter: searchText | orderBy: sortType:sortReverse ">
+      <td> {{ c.date }}</td>
+      <td> <a href="{{ c.url }}" > {{ c.condition }} </a> </td>
+    </tr>
+  </table>
+  </div>
+  </div>
+  </div>
+  </div> 
+</body>
+</html>
